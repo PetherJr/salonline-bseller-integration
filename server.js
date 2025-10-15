@@ -33,12 +33,24 @@ app.post("/integracao/cxpress/pedido", async (req, res) => {
     });
 
     if (!response.ok) {
-      const erro = await response.text();
+      /*const erro = await response.text();
       console.error("❌ Erro Bseller:", response.status, erro);
       return res.status(502).json({
         message: "Erro ao consultar o sistema de pedidos.",
         detalhe: erro,
-      });
+      });*/
+      const erro = await response.text();
+      console.error("❌ Erro Bseller:", response.status, erro);
+      if (erro.includes("não encontrado") || erro.includes("not found") || erro.includes("[]")){
+        return res.status(200).json({
+            message: "O número do pedido informado não existe ou não foi encontrado"
+        });
+      }
+
+      return res.status (502).json({
+        message: "Erro ao consultar o sistema de pedidos.",
+        detalhe: erro,
+      })
     }
 
     const data = await response.json();
