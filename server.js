@@ -2,6 +2,8 @@ import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 
+//Consulta pedido Bseller
+
 dotenv.config();
 const app = express();
 app.use(express.json());
